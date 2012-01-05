@@ -1,0 +1,150 @@
+// <copyright file="TodoistProject.cs" company="Nic Jansma">
+//  Copyright (c) Nic Jansma 2012 All Right Reserved
+// </copyright>
+// <author>Nic Jansma</author>
+// <email>nic@nicj.net</email>
+namespace TodoistBackup
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
+    /// <summary>
+    /// Todoist project
+    /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [XmlRootAttribute(ElementName = "project")]
+    public class TodoistProject
+    {
+        /// <summary>
+        /// Initializes a new instance of the TodoistProject class.
+        /// </summary>
+        public TodoistProject()
+        {
+            Items = new List<TodoistItem>();
+        }
+
+        /// <summary>
+        /// Gets or sets the project's Id
+        /// </summary>
+        /// <value>Project's Id</value>
+        [JsonProperty("id")]
+        [XmlAttribute]
+        public int Id
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the user's Id
+        /// </summary>
+        /// <value>User's Id number</value>
+        [JsonProperty("user_id")]
+        [XmlAttribute]
+        public int UserId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the project's name
+        /// </summary>
+        /// <value>Project's name</value>
+        [JsonProperty("name")]
+        [XmlAttribute]
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the project's color
+        /// </summary>
+        /// <value>Project's color</value>
+        [JsonProperty("color")]
+        [XmlAttribute]
+        public string Color
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets whether or not the project is collapsed
+        /// </summary>
+        /// <value>Whether or not the project is collapsed</value>
+        [JsonProperty("collapsed")]
+        [XmlAttribute]
+        public int Collapsed
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the project's order
+        /// </summary>
+        /// <value>Project's order</value>
+        [JsonProperty("item_order")]
+        [XmlAttribute]
+        public int ItemOrder
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the project's indent level
+        /// </summary>
+        /// <value>Project's indent level</value>
+        [JsonProperty("indent")]
+        [XmlAttribute]
+        public int Indent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the project's cached count of items
+        /// </summary>
+        /// <value>Cached count of items</value>
+        [JsonProperty("cache_count")]
+        [XmlAttribute]
+        public int CacheCount
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the project's last updated time
+        /// </summary>
+        /// <value>Last Updated time</value>
+        [JsonProperty("last_updated")]
+        [XmlAttribute]
+        public string LastUpdated
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the project's items
+        /// </summary>
+        /// <value>Project's items</value>
+        [XmlArray("items")]
+        [XmlArrayItem("item")]
+        public List<TodoistItem> Items
+        {
+            get;
+            set;
+        }
+    }
+}
