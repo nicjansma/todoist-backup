@@ -17,3 +17,4 @@ Version History
 ---------------
 * v1.0 - 2009-06-11: Initial release
 * v1.1 - 2011-12-02: Small fix for Todoist JSON change
+* v1.1.1 - 2012-02-12: note_count field added to TodoistItem
