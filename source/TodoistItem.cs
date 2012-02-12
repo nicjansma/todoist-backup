@@ -1,5 +1,5 @@
 // <copyright file="TodoistItem.cs" company="Nic Jansma">
-//  Copyright (c) Nic Jansma 2012 All Right Reserved
+//  Copyright (c) Nic Jansma 2009 All Right Reserved
 // </copyright>
 // <author>Nic Jansma</author>
 // <email>nic@nicj.net</email>
@@ -23,7 +23,7 @@ namespace TodoistBackup
         /// Initializes a new instance of the TodoistItem class.
         /// </summary>
         public TodoistItem()
-        {
+        {            
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace TodoistBackup
             get;
             set;
         }
-
+        
         /// <summary>
         /// Gets or sets whether or not the item is collapsed
         /// </summary>
@@ -95,7 +95,7 @@ namespace TodoistBackup
             get;
             set;
         }
-
+        
         /// <summary>
         /// Gets or sets the item's priority
         /// </summary>
@@ -106,7 +106,7 @@ namespace TodoistBackup
             get;
             set;
         }
-
+        
         /// <summary>
         /// Gets or sets the item's order
         /// </summary>
@@ -117,7 +117,7 @@ namespace TodoistBackup
             get;
             set;
         }
-
+        
         /// <summary>
         /// Gets or sets the item's indentation level
         /// </summary>
@@ -128,7 +128,7 @@ namespace TodoistBackup
             get;
             set;
         }
-
+        
         /// <summary>
         /// Gets or sets the item's content
         /// </summary>
@@ -139,7 +139,7 @@ namespace TodoistBackup
             get;
             set;
         }
-
+        
         /// <summary>
         /// Gets or sets whether or not the item is checked
         /// </summary>
@@ -150,7 +150,7 @@ namespace TodoistBackup
             get;
             set;
         }
-
+        
         /// <summary>
         /// Gets or sets the item's date (string form)
         /// </summary>
@@ -160,7 +160,7 @@ namespace TodoistBackup
         {
             get;
             set;
-        }
+        }        
 
         /// <summary>
         /// Gets or sets the item's labels
@@ -223,6 +223,17 @@ namespace TodoistBackup
         [JsonProperty("chains")]
         [XmlAttribute]
         public string Chains
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the number of notes
+        /// </summary>
+        [JsonProperty("note_count")]
+        [XmlAttribute]
+        public string NoteCount
         {
             get;
             set;
