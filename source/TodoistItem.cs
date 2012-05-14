@@ -1,5 +1,5 @@
 // <copyright file="TodoistItem.cs" company="Nic Jansma">
-//  Copyright (c) Nic Jansma 2009 All Right Reserved
+//  Copyright (c) Nic Jansma 2012 All Right Reserved
 // </copyright>
 // <author>Nic Jansma</author>
 // <email>nic@nicj.net</email>
@@ -234,6 +234,17 @@ namespace TodoistBackup
         [JsonProperty("note_count")]
         [XmlAttribute]
         public string NoteCount
+        {
+            get;
+            set;
+        }
+        
+        /// <summary>
+        /// Gets or sets the notes
+        /// </summary>
+        [XmlArray("notes")]
+        [XmlArrayItem("note")]
+        public List<TodoistItemNote> Notes
         {
             get;
             set;

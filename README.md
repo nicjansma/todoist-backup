@@ -11,10 +11,11 @@ Instructions
 
 2. Run `TodoistBackup.exe`:
 
-    `TodoistBackup.exe [api token] [output file]`
+    `TodoistBackup.exe [api token] [output file] ["false" to skip completed items]`
 
 Version History
 ---------------
 * v1.0 - 2009-06-11: Initial release
 * v1.1 - 2011-12-02: Small fix for Todoist JSON change
 * v1.1.1 - 2012-02-12: note_count field added to TodoistItem
+* v1.2 - 2012-05-14: Gets Notes, added an option to skip completed items (thanks to Tomasz Z. Kosowski)

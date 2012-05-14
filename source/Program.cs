@@ -26,6 +26,11 @@ namespace TodoistBackup
         private const int HttpTimeout = 60000;
 
         /// <summary>
+        /// Also process completed items?
+        /// </summary>
+        private static bool processCompleted = true;
+    
+        /// <summary>
         /// Todoist command line
         /// </summary>
         /// <param name="args">Command line arguments</param>
@@ -41,7 +46,7 @@ namespace TodoistBackup
                 //
                 if (args.Length == 0)
                 {
-                    Console.WriteLine("Todoist.exe [token] [output.xml]");
+                    Console.WriteLine("Todoist.exe [token] [output.xml] [\"false\" to not get completed items]");
                     Console.WriteLine("\t[output.xml] is optional");
                     return 1;
                 }
@@ -57,7 +62,7 @@ namespace TodoistBackup
                 writerSettings.Indent = true;
 
                 // second argument (optional) is the output file
-                if (args.Length == 2)
+                if (args.Length > 1)
                 {
                     writer = XmlWriter.Create(args[1], writerSettings);
                 }
@@ -66,6 +71,19 @@ namespace TodoistBackup
                     writer = XmlWriter.Create(Console.OpenStandardOutput(), writerSettings);
                 }
 
+                // third argument (optional) is the parameter for downloading completed items
+                if (args.Length > 2)
+                {
+                    if (args[2] == "false")
+                    {
+                        processCompleted = false;
+                    }
+                    else
+                    {
+                        throw new Exception("Third parameter not recognized!");
+                    }
+                }
+                
                 // backup!
                 returnCode = BackupTodoistItems(token, writer);
             }
@@ -126,40 +144,45 @@ namespace TodoistBackup
                     List<TodoistItem> items = JsonWebRequestToArray<TodoistItem>(BuildQueryUrl(token, "getUncompletedItems",  getUncompletedItemsParameters));
                     foreach (TodoistItem item in items)
                     {
+                        CheckForNotes(item, token);
                         project.Items.Add(item);
                     }
-
+         
                     // get complete tasks
                     int offset = 0;
                     bool haveAllCompletedItems = false;
 
-                    while (!haveAllCompletedItems)
+                    if (processCompleted)
                     {
-                        // get uncomplete tasks
-                        Dictionary<string, string> getCompletedItemsParameters = new Dictionary<string, string>()
+                        while (!haveAllCompletedItems)
                         {
-                            { "project_id", project.Id.ToString(CultureInfo.InvariantCulture) },
-                            { "offset", offset.ToString(CultureInfo.InvariantCulture) }
-                        };
-
-                        items = JsonWebRequestToArray<TodoistItem>(BuildQueryUrl(token, "getCompletedItems", getCompletedItemsParameters));
-
-                        if (items.Count == 0)
-                        {
-                            haveAllCompletedItems = true;
-                        }
-                        else
-                        {
-                            // still things to get
-                            foreach (TodoistItem item in items)
+                            // get uncomplete tasks
+                            Dictionary<string, string> getCompletedItemsParameters = new Dictionary<string, string>()
                             {
-                                project.Items.Add(item);
-                            }
+                                { "project_id", project.Id.ToString(CultureInfo.InvariantCulture) },
+                                { "offset", offset.ToString(CultureInfo.InvariantCulture) }
+                            };
 
-                            offset += items.Count;
+                            items = JsonWebRequestToArray<TodoistItem>(BuildQueryUrl(token, "getCompletedItems", getCompletedItemsParameters));
+
+                            if (items.Count == 0) 
+                            {
+                                haveAllCompletedItems = true;
+                            }
+                            else
+                            {
+                                // still things to get
+                                foreach (TodoistItem item in items)
+                                {
+                                    CheckForNotes(item, token);
+                                    project.Items.Add(item);
+                                }
+
+                                offset += items.Count;
+                            }
                         }
                     }
-
+                    
                     // write XML
                     projectSerializer.Serialize(writer, project, serializerNameSpace);
                 }
@@ -183,9 +206,28 @@ namespace TodoistBackup
                 Console.WriteLine("Please check your token and / or try again.");
 
                 return 1;
-            }
+            }            
 
             return 0;
+        }
+
+        /// <summary>
+        /// Checks and retrieves notes for an item
+        /// </summary>
+        /// <param name="item">Todoist item</param>
+        /// <param name="token">API token</param>
+        private static void CheckForNotes(TodoistItem item, string token)
+        {
+            int noteCount;
+            if (Int32.TryParse(item.NoteCount, out noteCount) && noteCount > 0)
+            {
+                Dictionary<string, string> getNotesParameters = new Dictionary<string, string>()
+                {
+                    { "item_id", item.Id.ToString(CultureInfo.InvariantCulture) }
+                };
+
+                item.Notes = JsonWebRequestToArray<TodoistItemNote>(BuildQueryUrl(token, "getNotes", getNotesParameters));
+            }
         }
 
         /// <summary>
@@ -208,8 +250,8 @@ namespace TodoistBackup
             using (StreamReader sr = new StreamReader(webResponse.GetResponseStream()))
             {
                 response = sr.ReadToEnd();
-            }
-
+            }   
+             
             // deserialize stream into an array of objects
             List<T> returnList = JsonConvert.DeserializeObject<List<T>>(response);
 
@@ -226,7 +268,7 @@ namespace TodoistBackup
         {
             return BuildQueryUrl(token, action, null);
         }
-
+    
         /// <summary>
         /// Build Todoist.com API query URL
         /// </summary>
@@ -241,7 +283,7 @@ namespace TodoistBackup
             // begin with todoist.com API URL
             parametersQuery.AppendFormat(
                 CultureInfo.InvariantCulture,
-                "http://todoist.com/API/{0}?token={1}",
+                "http://todoist.com/API/{0}?token={1}", 
                 action,
                 token);
 
