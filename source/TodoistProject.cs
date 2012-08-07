@@ -134,6 +134,42 @@ namespace TodoistBackup
             get;
             set;
         }
+                
+        /// <summary>
+        /// Gets or sets whether or not the Project is archived
+        /// </summary>
+        /// <value>Project is archived</value>
+        [JsonProperty("is_archived")]
+        [XmlAttribute]
+        public bool IsArchived
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the Project's archived date
+        /// </summary>
+        /// <value>Project's archived date</value>
+        [JsonProperty("archived_date")]
+        [XmlAttribute]
+        public string ArchivedDate
+        {
+            get;
+            set;
+        }
+        
+        /// <summary>
+        /// Gets or sets the Project's archived timestamp
+        /// </summary>
+        /// <value>Project's archived timestamp</value>
+        [JsonProperty("archived_timestamp")]
+        [XmlAttribute]
+        public string ArchivedTimestamp
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets the project's items

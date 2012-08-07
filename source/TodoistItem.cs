@@ -227,6 +227,42 @@ namespace TodoistBackup
             get;
             set;
         }
+                        
+        /// <summary>
+        /// Gets or sets whether or not the Item is archived
+        /// </summary>
+        /// <value>Item is archived</value>
+        [JsonProperty("is_archived")]
+        [XmlAttribute]
+        public bool IsArchived
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the Item's archived date
+        /// </summary>
+        /// <value>Item's archived date</value>
+        [JsonProperty("archived_date")]
+        [XmlAttribute]
+        public string ArchivedDate
+        {
+            get;
+            set;
+        }
+        
+        /// <summary>
+        /// Gets or sets the Item's archived timestamp
+        /// </summary>
+        /// <value>Item's archived timestamp</value>
+        [JsonProperty("archived_timestamp")]
+        [XmlAttribute]
+        public string ArchivedTimestamp
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets the number of notes
@@ -242,6 +278,7 @@ namespace TodoistBackup
         /// <summary>
         /// Gets or sets the notes
         /// </summary>
+        [JsonProperty("notes")]
         [XmlArray("notes")]
         [XmlArrayItem("note")]
         public List<TodoistItemNote> Notes
