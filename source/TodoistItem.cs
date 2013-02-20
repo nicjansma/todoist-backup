@@ -99,7 +99,9 @@ namespace TodoistBackup
         /// <summary>
         /// Gets or sets the item's priority
         /// </summary>
-        [JsonProperty("priority")]
+        [JsonProperty(
+            "priority",
+            NullValueHandling = NullValueHandling.Ignore)]
         [XmlAttribute]
         public int Priority
         {
@@ -176,7 +178,9 @@ namespace TodoistBackup
         /// <summary>
         /// Gets or sets whether or not the item is in the DST time zone
         /// </summary>
-        [JsonProperty("is_dst")]
+        [JsonProperty(
+            "is_dst", 
+            NullValueHandling = NullValueHandling.Ignore)]
         [XmlAttribute]
         public int IsDst
         {
@@ -229,7 +233,7 @@ namespace TodoistBackup
         }
                         
         /// <summary>
-        /// Gets or sets whether or not the Item is archived
+        /// Gets or sets a value indicating whether or not the Item is archived
         /// </summary>
         /// <value>Item is archived</value>
         [JsonProperty("is_archived")]

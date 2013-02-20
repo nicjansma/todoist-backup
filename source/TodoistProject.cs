@@ -136,7 +136,7 @@ namespace TodoistBackup
         }
                 
         /// <summary>
-        /// Gets or sets whether or not the Project is archived
+        /// Gets or sets a value indicating whether or not the Project is archived
         /// </summary>
         /// <value>Project is archived</value>
         [JsonProperty("is_archived")]

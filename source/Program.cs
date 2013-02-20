@@ -7,6 +7,7 @@ namespace TodoistBackup
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Globalization;
     using System.IO;
     using System.Net;
@@ -253,7 +254,12 @@ namespace TodoistBackup
             }   
              
             // deserialize stream into an array of objects
-            List<T> returnList = JsonConvert.DeserializeObject<List<T>>(response);
+            JsonSerializerSettings settings = new JsonSerializerSettings()
+            {
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+
+            List<T> returnList = JsonConvert.DeserializeObject<List<T>>(response, settings);
 
             return returnList;
         }
@@ -295,6 +301,8 @@ namespace TodoistBackup
                     parametersQuery.AppendFormat("&{0}={1}", key, parameters[key]);
                 }
             }
+
+            Debugger.Log(1, null, parametersQuery.ToString() + "\n");
 
             return parametersQuery.ToString();
         }
