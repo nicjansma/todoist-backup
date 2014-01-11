@@ -1,5 +1,5 @@
 // <copyright file="TodoistItemNote.cs" company="Nic Jansma">
-//  Copyright (c) Nic Jansma 2012 All Right Reserved
+//  Copyright (c) Nic Jansma 2014 All Right Reserved
 // </copyright>
 // <author>Nic Jansma</author>
 // <email>nic@nicj.net</email>

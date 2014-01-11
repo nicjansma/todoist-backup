@@ -1,5 +1,5 @@
 // <copyright file="TodoistItem.cs" company="Nic Jansma">
-//  Copyright (c) Nic Jansma 2012 All Right Reserved
+//  Copyright (c) Nic Jansma 2014 All Right Reserved
 // </copyright>
 // <author>Nic Jansma</author>
 // <email>nic@nicj.net</email>
@@ -69,6 +69,30 @@ namespace TodoistBackup
         [JsonProperty("due_date")]
         [XmlAttribute]
         public string DueDate
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the item's UTC due date
+        /// </summary>
+        /// <value>Item's UTC due date</value>
+        [JsonProperty("due_date_utc")]
+        [XmlAttribute]
+        public string DueDateUTC
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the item's added date
+        /// </summary>
+        /// <value>Item's added date</value>
+        [JsonProperty("date_added")]
+        [XmlAttribute]
+        public string DateAdded
         {
             get;
             set;
@@ -290,5 +314,53 @@ namespace TodoistBackup
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the user ID that assigned this task
+        /// </summary>
+        [JsonProperty("assigned_by_uid",
+            NullValueHandling = NullValueHandling.Ignore)]
+        [XmlAttribute]
+        public int AssignedByUserId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the user ID that is assigned to this task
+        /// </summary>
+        [JsonProperty("responsible_uid",
+            NullValueHandling = NullValueHandling.Ignore)]
+        [XmlAttribute]
+        public int ResponsibleUserId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the Sync ID
+        /// </summary>
+        [JsonProperty("sync_id",
+            NullValueHandling = NullValueHandling.Ignore)]
+        [XmlAttribute]
+        public int SyncId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the task is deleted
+        /// </summary>
+        [JsonProperty("is_deleted")]
+        [XmlAttribute]
+        public int IsDeleted
+        {
+            get;
+            set;
+        }
+
     }
 }

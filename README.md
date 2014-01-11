@@ -1,4 +1,4 @@
-Copyright (c) 2012 Nic Jansma
+Copyright (c) 2014 Nic Jansma
 [http://nicj.net](http://nicj.net)
 
 See [nicj.net](http://nicj.net/2009/06/11/todoistcom-and-todoistbackupexe) for a description of this project.
@@ -20,3 +20,4 @@ TodoistBackup uses your Todoist API token to backup your projects and tasks to a
 * v1.1.1 - 2012-02-12: note_count field added to TodoistItem
 * v1.2 - 2012-05-14: Gets Notes, added an option to skip completed items (thanks to Tomasz Z. Kosowski)
 * v1.3 - 2012-08-07: Fixes for is_archived, archived_timestamp, archived_date and notes properties
+* v1.4 - 2014-01-10: Additional properties saved, no longer crashes if new properties are added

@@ -1,5 +1,5 @@
 ﻿// <copyright file="AssemblyInfo.cs" company="Nic Jansma">
-//  Copyright (c) Nic Jansma 2012 All Right Reserved
+//  Copyright (c) Nic Jansma 2014 All Right Reserved
 // </copyright>
 // <author>Nic Jansma</author>
 // <email>nic@nicj.net</email>
@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TodoistBackup")]
-[assembly: AssemblyCopyright("Copyright © Nic Jansma 2012")]
+[assembly: AssemblyCopyright("Copyright © Nic Jansma 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyFileVersion("1.3.0.0")]
+[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyFileVersion("1.4.0.0")]
 
 [assembly: CLSCompliant(true)]

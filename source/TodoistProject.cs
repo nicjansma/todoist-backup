@@ -1,5 +1,5 @@
 // <copyright file="TodoistProject.cs" company="Nic Jansma">
-//  Copyright (c) Nic Jansma 2012 All Right Reserved
+//  Copyright (c) Nic Jansma 2014 All Right Reserved
 // </copyright>
 // <author>Nic Jansma</author>
 // <email>nic@nicj.net</email>
@@ -178,6 +178,28 @@ namespace TodoistBackup
         [XmlArray("items")]
         [XmlArrayItem("item")]
         public List<TodoistItem> Items
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this is the Inbox project
+        /// </summary>
+        [JsonProperty("inbox_project")]
+        [XmlAttribute]
+        public bool InboxProject
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the project is deleted
+        /// </summary>
+        [JsonProperty("is_deleted")]
+        [XmlAttribute]
+        public int IsDeleted
         {
             get;
             set;
