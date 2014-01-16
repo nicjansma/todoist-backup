@@ -15,8 +15,8 @@ TodoistBackup uses your Todoist API token to backup your projects and tasks to a
 
 * `api-token` is your Todoist API token
 * `output.xml` is the output file you want to save to
-* `/completed` will also save all completed items
-* `/notes` will also save all item note
+* `/completed` will save all completed items (optional)
+* `/notes` will save all item notes (optional)
 
 # Version History
 
