@@ -29,8 +29,13 @@ namespace TodoistBackup
         /// <summary>
         /// Also process completed items?
         /// </summary>
-        private static bool processCompleted = true;
-    
+        private static bool processCompleted = false;
+
+        /// <summary>
+        /// Also process notes?
+        /// </summary>
+        private static bool processNotes = false;
+
         /// <summary>
         /// Todoist command line
         /// </summary>
@@ -45,10 +50,15 @@ namespace TodoistBackup
                 //
                 // check arguments
                 //
-                if (args.Length == 0)
+                if (args.Length < 2)
                 {
-                    Console.WriteLine("Todoist.exe [token] [output.xml] [\"false\" to not get completed items]");
-                    Console.WriteLine("\t[output.xml] is optional");
+                    Console.WriteLine("Usage:");
+                    Console.WriteLine();
+                    Console.WriteLine("TodoistBackup.exe api-token output.xml [/completed] [/notes]");
+                    Console.WriteLine("\tapi-token is your todoist.com account API token");
+                    Console.WriteLine("\toutput.xml is the output file");
+                    Console.WriteLine("\t[/completed] will backup all completed tasks");
+                    Console.WriteLine("\t[/notes] will backup all task notes");
                     return 1;
                 }
 
@@ -62,29 +72,28 @@ namespace TodoistBackup
                 XmlWriterSettings writerSettings = new XmlWriterSettings();
                 writerSettings.Indent = true;
 
-                // second argument (optional) is the output file
-                if (args.Length > 1)
-                {
-                    writer = XmlWriter.Create(args[1], writerSettings);
-                }
-                else
-                {
-                    writer = XmlWriter.Create(Console.OpenStandardOutput(), writerSettings);
-                }
+                // file specified
+                writer = XmlWriter.Create(args[1], writerSettings);
 
-                // third argument (optional) is the parameter for downloading completed items
-                if (args.Length > 2)
+                //
+                // Process command line arguments
+                //
+                for (int i = 2; i < args.Length; i++)
                 {
-                    if (args[2] == "false")
+                    if (args[i].Equals("/completed", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        processCompleted = false;
+                        processCompleted = true;
+                    }
+                    else if (args[i].Equals("/notes", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        processNotes = true;
                     }
                     else
                     {
-                        throw new Exception("Third parameter not recognized!");
+                        throw new Exception(String.Format(CultureInfo.InvariantCulture, "Parameter '{0}' not recognized!", args[i]));
                     }
                 }
-                
+
                 // backup!
                 returnCode = BackupTodoistItems(token, writer);
             }
@@ -145,7 +154,11 @@ namespace TodoistBackup
                     List<TodoistItem> items = JsonWebRequestToArray<TodoistItem>(BuildQueryUrl(token, "getUncompletedItems",  getUncompletedItemsParameters));
                     foreach (TodoistItem item in items)
                     {
-                        CheckForNotes(item, token);
+                        if (processNotes)
+                        {
+                            CheckForNotes(item, token);
+                        }
+
                         project.Items.Add(item);
                     }
          
@@ -219,16 +232,12 @@ namespace TodoistBackup
         /// <param name="token">API token</param>
         private static void CheckForNotes(TodoistItem item, string token)
         {
-            int noteCount;
-            if (Int32.TryParse(item.NoteCount, out noteCount) && noteCount > 0)
+            Dictionary<string, string> getNotesParameters = new Dictionary<string, string>()
             {
-                Dictionary<string, string> getNotesParameters = new Dictionary<string, string>()
-                {
-                    { "item_id", item.Id.ToString(CultureInfo.InvariantCulture) }
-                };
+                { "item_id", item.Id.ToString(CultureInfo.InvariantCulture) }
+            };
 
-                item.Notes = JsonWebRequestToArray<TodoistItemNote>(BuildQueryUrl(token, "getNotes", getNotesParameters));
-            }
+            item.Notes = JsonWebRequestToArray<TodoistItemNote>(BuildQueryUrl(token, "getNotes", getNotesParameters));
         }
 
         /// <summary>

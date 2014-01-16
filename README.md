@@ -11,7 +11,12 @@ TodoistBackup uses your Todoist API token to backup your projects and tasks to a
 
 2. Run `TodoistBackup.exe`:
 
-    `TodoistBackup.exe [api token] [output file] ["false" to skip completed items]`
+    `TodoistBackup.exe api-token output.xml [/completed] [/notes]`
+
+* `api-token` is your Todoist API token
+* `output.xml` is the output file you want to save to
+* `/completed` will also save all completed items
+* `/notes` will also save all item note
 
 # Version History
 
@@ -21,3 +26,4 @@ TodoistBackup uses your Todoist API token to backup your projects and tasks to a
 * v1.2 - 2012-05-14: Gets Notes, added an option to skip completed items (thanks to Tomasz Z. Kosowski)
 * v1.3 - 2012-08-07: Fixes for is_archived, archived_timestamp, archived_date and notes properties
 * v1.4 - 2014-01-10: Additional properties saved, no longer crashes if new properties are added
+* v1.5 - 2014-01-15: Only backs up notes and completed items if the command line arguments are set

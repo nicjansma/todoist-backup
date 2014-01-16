@@ -361,6 +361,5 @@ namespace TodoistBackup
             get;
             set;
         }
-
     }
 }
