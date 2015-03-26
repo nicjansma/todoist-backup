@@ -80,7 +80,7 @@ namespace TodoistBackup
         /// <value>Item's UTC due date</value>
         [JsonProperty("due_date_utc")]
         [XmlAttribute]
-        public string DueDateUTC
+        public string DueDateUtc
         {
             get;
             set;
@@ -206,7 +206,7 @@ namespace TodoistBackup
             "is_dst", 
             NullValueHandling = NullValueHandling.Ignore)]
         [XmlAttribute]
-        public int IsDst
+        public int IsDaylightSavings
         {
             get;
             set;
@@ -235,11 +235,11 @@ namespace TodoistBackup
         }
 
         /// <summary>
-        /// Gets or sets the Todoist unknown mm_offset attribute
+        /// Gets or sets the Todoist mm_offset attribute
         /// </summary>
         [JsonProperty("mm_offset")]
         [XmlAttribute]
-        public int MmOffset
+        public int MinutesOffset
         {
             get;
             set;

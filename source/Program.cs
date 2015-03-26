@@ -50,15 +50,9 @@ namespace TodoistBackup
                 //
                 // check arguments
                 //
-                if (args.Length < 2)
+                if (args == null || args.Length < 2)
                 {
-                    Console.WriteLine("Usage:");
-                    Console.WriteLine();
-                    Console.WriteLine("TodoistBackup.exe api-token output.xml [/completed] [/notes]");
-                    Console.WriteLine("\tapi-token is your todoist.com account API token");
-                    Console.WriteLine("\toutput.xml is the output file");
-                    Console.WriteLine("\t[/completed] will backup all completed tasks");
-                    Console.WriteLine("\t[/notes] will backup all task notes");
+                    PrintUsage();
                     return 1;
                 }
 
@@ -73,24 +67,25 @@ namespace TodoistBackup
                 writerSettings.Indent = true;
 
                 // file specified
-                writer = XmlWriter.Create(args[1], writerSettings);
-
-                //
-                // Process command line arguments
-                //
-                for (int i = 2; i < args.Length; i++)
+                using (writer = XmlWriter.Create(args[1], writerSettings))
                 {
-                    if (args[i].Equals("/completed", StringComparison.InvariantCultureIgnoreCase))
+                    //
+                    // Process command line arguments
+                    //
+                    for (int i = 2; i < args.Length; i++)
                     {
-                        processCompleted = true;
-                    }
-                    else if (args[i].Equals("/notes", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        processNotes = true;
-                    }
-                    else
-                    {
-                        throw new Exception(String.Format(CultureInfo.InvariantCulture, "Parameter '{0}' not recognized!", args[i]));
+                        if (args[i].Equals("/completed", StringComparison.OrdinalIgnoreCase))
+                        {
+                            processCompleted = true;
+                        }
+                        else if (args[i].Equals("/notes", StringComparison.OrdinalIgnoreCase))
+                        {
+                            processNotes = true;
+                        }
+                        else
+                        {
+                            throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Parameter '{0}' not recognized!", args[i]));
+                        }
                     }
                 }
 
@@ -104,6 +99,21 @@ namespace TodoistBackup
             }
 
             return returnCode;
+        }
+
+        /// <summary>
+        /// Prints command-line usage
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        private static void PrintUsage()
+        {            
+            Console.WriteLine("Usage:");
+            Console.WriteLine();
+            Console.WriteLine("TodoistBackup.exe api-token output.xml [/completed] [/notes]");
+            Console.WriteLine("\tapi-token is your todoist.com account API token");
+            Console.WriteLine("\toutput.xml is the output file");
+            Console.WriteLine("\t[/completed] will backup all completed tasks");
+            Console.WriteLine("\t[/notes] will backup all task notes");
         }
 
         /// <summary>
