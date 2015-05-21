@@ -87,10 +87,10 @@ namespace TodoistBackup
                             throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Parameter '{0}' not recognized!", args[i]));
                         }
                     }
-                }
 
-                // backup!
-                returnCode = BackupTodoistItems(token, writer);
+                    // backup!
+                    returnCode = BackupTodoistItems(token, writer);
+                }
             }
             catch (Exception e)
             {
@@ -308,7 +308,7 @@ namespace TodoistBackup
             // begin with todoist.com API URL
             parametersQuery.AppendFormat(
                 CultureInfo.InvariantCulture,
-                "http://todoist.com/API/{0}?token={1}", 
+                "https://todoist.com/API/{0}?token={1}", 
                 action,
                 token);
 
